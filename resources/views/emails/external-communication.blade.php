@@ -1,0 +1,1 @@
+<p>{{ $communicationMessage->body }}</p>

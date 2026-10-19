@@ -24,7 +24,8 @@ class AuthTest extends TestCase
         $response = $this->get(route('login'));
 
         $response->assertOk();
-        $response->assertViewIs('auth.login');
+        $response->assertSee('name="email"', false);
+        $response->assertSee('name="password"', false);
     }
 
     // ── Authenticated user cannot see login page ──────────────────────────

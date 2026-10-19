@@ -17,6 +17,9 @@ use App\Http\Controllers\Management\VisitorController;
 use App\Http\Controllers\Management\UserManagementController;
 use App\Http\Controllers\Management\PaymentController;
 use App\Http\Controllers\Management\PaymentMethodController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CustomerMessageController;
+use App\Http\Controllers\UserLocationController;
 use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('/login',[LoginController::class,'showLoginForm'])->name('login');
@@ -34,6 +37,11 @@ Route::get('/language/{locale}', function (string $locale) {
 Route::post('/logout',[LoginController::class,'logout'])->name('logout')->middleware('auth');
 Route::middleware('auth')->group(function () {
     Route::get('/',DashboardController::class)->name('dashboard');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index')->middleware('role:admin,hr,warehouse_manager');
+    Route::get('/messages', [CustomerMessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages', [CustomerMessageController::class, 'store'])->name('messages.store');
+    Route::get('/locations', [UserLocationController::class, 'index'])->name('locations.index');
+    Route::post('/locations', [UserLocationController::class, 'store'])->name('locations.store');
     Route::resource('facilities',FacilityController::class)->except(['destroy'])->middleware('role:admin,hr');
     Route::resource('people',PersonController::class)->except(['destroy'])->middleware('role:admin,hr');
     Route::resource('departments',DepartmentController::class)->except(['show','destroy'])->middleware('role:admin,hr');

@@ -49,28 +49,33 @@
 <body>
 <div class="app-shell">
     <aside class="sidebar" id="appSidebar">
-        <a class="brand" href="{{ route('dashboard') }}"><span class="brand-mark"><i class="bi bi-buildings-fill"></i></span><span>Laraventry Pro</span></a>
-        <div class="nav-section">الرئيسية</div><nav class="nav flex-column">
-            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i><span>لوحة التحكم</span></a>
-            <a class="nav-link {{ request()->routeIs('facilities.*') ? 'active' : '' }}" href="{{ route('facilities.index') }}"><i class="bi bi-buildings"></i><span>المنشآت والعقارات</span></a>
-            <a class="nav-link {{ request()->routeIs('people.*') ? 'active' : '' }}" href="{{ route('people.index') }}"><i class="bi bi-people"></i><span>الأشخاص والموظفون</span></a>
-            <a class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}" href="{{ route('departments.index') }}"><i class="bi bi-diagram-3"></i><span>الأقسام</span></a>
-            <a class="nav-link {{ request()->routeIs('shifts.*') ? 'active' : '' }}" href="{{ route('shifts.index') }}"><i class="bi bi-calendar2-week"></i><span>الورديات وساعات الدوام</span></a>
+        <a class="brand" href="{{ route('dashboard') }}"><span class="brand-mark"><i class="bi bi-buildings-fill"></i></span><span>Alazzazi InvoiceShelf</span></a>
+        <div class="nav-section">{{ __('Main menu') }}</div><nav class="nav flex-column">
+            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i><span>{{ __('Dashboard') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('facilities.*') ? 'active' : '' }}" href="{{ route('facilities.index') }}"><i class="bi bi-buildings"></i><span>{{ __('Facilities and properties') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('people.*') ? 'active' : '' }}" href="{{ route('people.index') }}"><i class="bi bi-people"></i><span>{{ __('People and employees') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}" href="{{ route('departments.index') }}"><i class="bi bi-diagram-3"></i><span>{{ __('Departments') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('shifts.*') ? 'active' : '' }}" href="{{ route('shifts.index') }}"><i class="bi bi-calendar2-week"></i><span>{{ __('Shifts and working hours') }}</span></a>
         </nav>
-        <div class="nav-section mt-3">الحضور والأمن</div><nav class="nav flex-column">
-            <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}"><i class="bi bi-clock-history"></i><span>الحضور والغياب</span></a>
-            <a class="nav-link {{ request()->routeIs('visitors.*') ? 'active' : '' }}" href="{{ route('visitors.index') }}"><i class="bi bi-person-vcard"></i><span>الزوار</span></a>
-            <a class="nav-link {{ request()->routeIs('access-logs.*') ? 'active' : '' }}" href="{{ route('access-logs.index') }}"><i class="bi bi-door-open"></i><span>الدخول والخروج</span></a>
+        <div class="nav-section mt-3">{{ __('Attendance and security') }}</div><nav class="nav flex-column">
+            <a class="nav-link {{ request()->routeIs('attendance.*') ? 'active' : '' }}" href="{{ route('attendance.index') }}"><i class="bi bi-clock-history"></i><span>{{ __('Attendance') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('visitors.*') ? 'active' : '' }}" href="{{ route('visitors.index') }}"><i class="bi bi-person-vcard"></i><span>{{ __('Visitors') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('access-logs.*') ? 'active' : '' }}" href="{{ route('access-logs.index') }}"><i class="bi bi-door-open"></i><span>{{ __('Access Logs') }}</span></a>
         </nav>
         @if(auth()->user()->isAdmin())
         <div class="nav-section mt-3">{{ __('Administration') }}</div><nav class="nav flex-column"><a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}"><i class="bi bi-shield-check"></i><span>{{ __('Users & Permissions') }}</span></a><a class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}" href="{{ route('payments.index') }}"><i class="bi bi-credit-card-2-front"></i><span>{{ __('Payments') }}</span></a><a class="nav-link {{ request()->routeIs('payment-methods.*') ? 'active' : '' }}" href="{{ route('payment-methods.index') }}"><i class="bi bi-wallet2"></i><span>{{ __('Payment Methods') }}</span></a></nav>
         @endif
-        <div class="nav-section mt-3">المخزون</div><nav class="nav flex-column">
-            <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}"><i class="bi bi-box-seam"></i><span>المنتجات</span></a>
-            <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}"><i class="bi bi-tags"></i><span>التصنيفات</span></a>
-            <a class="nav-link {{ request()->routeIs('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}"><i class="bi bi-truck"></i><span>الموردون</span></a>
-            <a class="nav-link {{ request()->routeIs('warehouses.*') ? 'active' : '' }}" href="{{ route('warehouses.index') }}"><i class="bi bi-boxes"></i><span>المستودعات</span></a>
-            <a class="nav-link {{ request()->routeIs('stock-movements.*') ? 'active' : '' }}" href="{{ route('stock-movements.index') }}"><i class="bi bi-arrow-left-right"></i><span>حركة المخزون</span></a>
+        <div class="nav-section mt-3">{{ __('Inventory') }}</div><nav class="nav flex-column">
+            <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}"><i class="bi bi-box-seam"></i><span>{{ __('Products') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}"><i class="bi bi-tags"></i><span>{{ __('Categories') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}"><i class="bi bi-truck"></i><span>{{ __('Suppliers') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('warehouses.*') ? 'active' : '' }}" href="{{ route('warehouses.index') }}"><i class="bi bi-boxes"></i><span>{{ __('Warehouses') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('stock-movements.*') ? 'active' : '' }}" href="{{ route('stock-movements.index') }}"><i class="bi bi-arrow-left-right"></i><span>{{ __('Stock Movements') }}</span></a>
+        </nav>
+        <div class="nav-section mt-3">{{ __('Workspace') }}</div><nav class="nav flex-column">
+            <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}"><i class="bi bi-file-earmark-bar-graph"></i><span>{{ __('Reports') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}" href="{{ route('messages.index') }}"><i class="bi bi-chat-dots"></i><span>{{ __('Customer communication') }}</span></a>
+            <a class="nav-link {{ request()->routeIs('locations.*') ? 'active' : '' }}" href="{{ route('locations.index') }}"><i class="bi bi-geo-alt"></i><span>{{ __('GPS location') }}</span></a>
         </nav>
     </aside>
     <div class="main-wrap">
