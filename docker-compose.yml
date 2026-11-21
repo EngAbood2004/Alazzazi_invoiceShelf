@@ -1,0 +1,52 @@
+# Production-style stack for a cloud server (any VPS with Docker):
+#   cp .env.example .env   # fill APP_KEY, APP_URL, DB_PASSWORD, mail, keys
+#   docker compose up -d --build
+#   docker compose exec app php artisan key:generate --force   (first run only, if APP_KEY is empty)
+# The app listens on port 10000; put a TLS reverse proxy (Caddy/Nginx/Traefik)
+# in front of it so the Lahza callback and the mobile API use HTTPS.
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      GOTENBERG_URL: http://gotenberg:3000
+      RUN_SCHEDULER: "true"
+    ports:
+      - "10000:10000"
+    volumes:
+      - storage:/var/www/html/storage/app
+    depends_on:
+      db:
+        condition: service_healthy
+      gotenberg:
+        condition: service_started
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laraventry}
+      MYSQL_USER: ${DB_USERNAME:-laraventry}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-${DB_PASSWORD}}
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    restart: unless-stopped
+    command: ["gotenberg", "--api-timeout=60s"]
+
+volumes:
+  mysql:
+  storage:

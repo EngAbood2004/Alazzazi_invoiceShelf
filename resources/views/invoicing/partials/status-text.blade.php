@@ -1,0 +1,1 @@
+{{ ['draft' => __('Draft'), 'sent' => __('Sent'), 'viewed' => __('Viewed'), 'partially_paid' => __('Partially paid'), 'paid' => __('Paid'), 'cancelled' => __('Cancelled'), 'overdue' => __('Overdue')][$status] ?? $status }}

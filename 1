@@ -1,0 +1,7 @@
+Merge branch 'alazzazi-invoiceShelf-integration'
+# Please enter a commit message to explain why this merge is necessary,
+sh: line 1: wq:1: command not found
+:wq!
+#
+# Lines starting with '#' will be ignored, and an empty message aborts
+# e commit.

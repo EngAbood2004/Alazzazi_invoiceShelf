@@ -1,0 +1,111 @@
+<?php
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\Management\AccessLogController;
+use App\Http\Controllers\Management\AttendanceController;
+use App\Http\Controllers\Management\DepartmentController;
+use App\Http\Controllers\Management\FacilityController;
+use App\Http\Controllers\Management\PersonController;
+use App\Http\Controllers\Management\ShiftController;
+use App\Http\Controllers\Management\VisitorController;
+use App\Http\Controllers\Management\UserManagementController;
+use App\Http\Controllers\Management\PaymentController;
+use App\Http\Controllers\Management\PaymentMethodController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\CustomerMessageController;
+use App\Http\Controllers\UserLocationController;
+use App\Http\Controllers\Invoicing\BusinessSettingController;
+use App\Http\Controllers\Invoicing\CustomerController;
+use App\Http\Controllers\Invoicing\EstimateController;
+use App\Http\Controllers\Invoicing\ExpenseController;
+use App\Http\Controllers\Invoicing\InsightsController;
+use App\Http\Controllers\Invoicing\InvoiceController;
+use App\Http\Controllers\Invoicing\RecurringInvoiceController;
+use App\Http\Controllers\PublicArea\PublicInvoiceController;
+use Illuminate\Support\Facades\Route;
+Route::middleware('guest')->group(function () {
+    Route::get('/login',[LoginController::class,'showLoginForm'])->name('login');
+    Route::post('/login',[LoginController::class,'login'])->middleware('throttle:login')->name('login.attempt');
+    Route::get('/register',[RegisterController::class,'showRegistrationForm'])->name('register');
+    Route::post('/register',[RegisterController::class,'register'])->name('register.store');
+});
+
+Route::get('/language/{locale}', function (string $locale) {
+    abort_unless(array_key_exists($locale, config('laraventry.locales')), 404);
+    session(['locale' => $locale]);
+    return back();
+})->name('language.switch');
+
+// Customer-facing links (secret token, no login)
+Route::prefix('i')->name('public.')->middleware('throttle:60,1')->group(function () {
+    Route::get('/{token}', [PublicInvoiceController::class, 'show'])->name('invoices.show');
+    Route::get('/{token}/pdf', [PublicInvoiceController::class, 'pdf'])->name('invoices.pdf');
+    Route::post('/{token}/pay', [PublicInvoiceController::class, 'pay'])->name('invoices.pay');
+    Route::get('/{token}/paid', [PublicInvoiceController::class, 'callback'])->name('invoices.callback');
+});
+Route::get('/e/{token}/pdf', [PublicInvoiceController::class, 'estimate'])->name('public.estimates.pdf')->middleware('throttle:60,1');
+
+Route::post('/logout',[LoginController::class,'logout'])->name('logout')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/',DashboardController::class)->name('dashboard');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index')->middleware('role:admin,hr,warehouse_manager');
+    Route::get('/sales', [SaleController::class, 'index'])->name('sales.index')->middleware('role:warehouse_manager');
+    Route::post('/sales', [SaleController::class, 'store'])->name('sales.store')->middleware('role:warehouse_manager');
+    Route::get('/messages', [CustomerMessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages', [CustomerMessageController::class, 'store'])->name('messages.store');
+    Route::get('/locations', [UserLocationController::class, 'index'])->name('locations.index');
+    Route::post('/locations', [UserLocationController::class, 'store'])->name('locations.store');
+    Route::resource('facilities',FacilityController::class)->except(['destroy'])->middleware('role:admin,hr');
+    Route::resource('people',PersonController::class)->except(['destroy'])->middleware('role:admin,hr');
+    Route::resource('departments',DepartmentController::class)->except(['show','destroy'])->middleware('role:admin,hr');
+    Route::resource('shifts',ShiftController::class)->except(['show','destroy'])->middleware('role:admin,hr');
+    Route::resource('attendance',AttendanceController::class)->except(['show','destroy'])->middleware('role:admin,hr');
+    Route::resource('visitors',VisitorController::class)->only(['index','create','store'])->middleware('role:admin,hr,security');
+    Route::resource('access-logs',AccessLogController::class)->only(['index','create','store'])->middleware('role:admin,security');
+    Route::resource('users',UserManagementController::class)->only(['index','edit','update'])->middleware('role:admin');
+    Route::resource('payments', PaymentController::class)->only(['index','create','store','show'])->middleware('role:admin,hr,warehouse_manager');
+    Route::post('payments/{payment}/review', [PaymentController::class,'review'])->name('payments.review')->middleware('role:admin');
+    Route::get('payments/{payment}/receipt', [PaymentController::class,'receipt'])->name('payments.receipt')->middleware('role:admin,hr,warehouse_manager');
+    Route::get('payment-methods', [PaymentMethodController::class,'index'])->name('payment-methods.index')->middleware('role:admin');
+    Route::post('payment-methods', [PaymentMethodController::class,'store'])->name('payment-methods.store')->middleware('role:admin');
+    Route::put('payment-methods/{paymentMethod}', [PaymentMethodController::class,'update'])->name('payment-methods.update')->middleware('role:admin');
+    Route::resource('categories',CategoryController::class)->except(['show'])->middleware('role:warehouse_manager');
+    Route::resource('suppliers',SupplierController::class)->except(['show'])->middleware('role:warehouse_manager');
+    Route::resource('warehouses',WarehouseController::class)->except(['show'])->middleware('role:warehouse_manager');
+    Route::resource('products',ProductController::class)->middleware('role:warehouse_manager');
+    // Invoicing (accountants; admins pass every role check)
+    Route::middleware('role:accountant')->group(function () {
+        Route::get('insights', InsightsController::class)->name('insights');
+        Route::resource('customers', CustomerController::class);
+        Route::resource('invoices', InvoiceController::class)->except(['destroy']);
+        Route::post('invoices/{invoice}/send', [InvoiceController::class, 'send'])->name('invoices.send');
+        Route::post('invoices/{invoice}/cancel', [InvoiceController::class, 'cancel'])->name('invoices.cancel');
+        Route::post('invoices/{invoice}/payments', [InvoiceController::class, 'recordPayment'])->name('invoices.payments.store');
+        Route::post('invoices/{invoice}/remind', [InvoiceController::class, 'remind'])->name('invoices.remind')->middleware('throttle:10,1');
+        Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
+        Route::resource('estimates', EstimateController::class)->except(['destroy']);
+        Route::post('estimates/{estimate}/status', [EstimateController::class, 'status'])->name('estimates.status');
+        Route::post('estimates/{estimate}/convert', [EstimateController::class, 'convert'])->name('estimates.convert');
+        Route::get('estimates/{estimate}/pdf', [EstimateController::class, 'pdf'])->name('estimates.pdf');
+        Route::resource('recurring-invoices', RecurringInvoiceController::class)->except(['show', 'destroy']);
+        Route::post('recurring-invoices/{recurring_invoice}/run', [RecurringInvoiceController::class, 'runNow'])->name('recurring-invoices.run');
+        Route::resource('expenses', ExpenseController::class)->except(['show']);
+        Route::get('expenses/{expense}/receipt', [ExpenseController::class, 'receipt'])->name('expenses.receipt');
+    });
+    Route::middleware('role:admin')->group(function () {
+        Route::get('settings/invoicing', [BusinessSettingController::class, 'edit'])->name('invoicing-settings.edit');
+        Route::put('settings/invoicing', [BusinessSettingController::class, 'update'])->name('invoicing-settings.update');
+        Route::post('settings/taxes', [BusinessSettingController::class, 'storeTax'])->name('taxes.store');
+        Route::post('settings/taxes/{tax}/toggle', [BusinessSettingController::class, 'toggleTax'])->name('taxes.toggle');
+    });
+    Route::get('stock-movements',[StockMovementController::class,'index'])->name('stock-movements.index')->middleware('role:warehouse_manager');
+    Route::get('stock-movements/create',[StockMovementController::class,'create'])->name('stock-movements.create')->middleware('role:warehouse_manager');
+    Route::post('stock-movements',[StockMovementController::class,'store'])->name('stock-movements.store')->middleware('role:warehouse_manager');
+});
