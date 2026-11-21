@@ -65,6 +65,7 @@
         @if(auth()->user()->isAdmin())
         <div class="nav-section mt-3">{{ __('Administration') }}</div><nav class="nav flex-column"><a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}"><i class="bi bi-shield-check"></i><span>{{ __('Users & Permissions') }}</span></a><a class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}" href="{{ route('payments.index') }}"><i class="bi bi-credit-card-2-front"></i><span>{{ __('Payments') }}</span></a><a class="nav-link {{ request()->routeIs('payment-methods.*') ? 'active' : '' }}" href="{{ route('payment-methods.index') }}"><i class="bi bi-wallet2"></i><span>{{ __('Payment Methods') }}</span></a></nav>
         @endif
+<<<<<<< HEAD
         @if(auth()->user()->isAdmin() || auth()->user()->role?->value === 'accountant')
         <div class="nav-section mt-3">{{ __('Invoicing') }}</div><nav class="nav flex-column">
             <a class="nav-link {{ request()->routeIs('insights') ? 'active' : '' }}" href="{{ route('insights') }}"><i class="bi bi-stars"></i><span>{{ __('Smart insights') }}</span></a>
@@ -76,13 +77,18 @@
             @if(auth()->user()->isAdmin())<a class="nav-link {{ request()->routeIs('invoicing-settings.*') ? 'active' : '' }}" href="{{ route('invoicing-settings.edit') }}"><i class="bi bi-sliders"></i><span>{{ __('Invoicing settings') }}</span></a>@endif
         </nav>
         @endif
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         <div class="nav-section mt-3">{{ __('Inventory') }}</div><nav class="nav flex-column">
             <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}"><i class="bi bi-box-seam"></i><span>{{ __('Products') }}</span></a>
             <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('categories.index') }}"><i class="bi bi-tags"></i><span>{{ __('Categories') }}</span></a>
             <a class="nav-link {{ request()->routeIs('suppliers.*') ? 'active' : '' }}" href="{{ route('suppliers.index') }}"><i class="bi bi-truck"></i><span>{{ __('Suppliers') }}</span></a>
             <a class="nav-link {{ request()->routeIs('warehouses.*') ? 'active' : '' }}" href="{{ route('warehouses.index') }}"><i class="bi bi-boxes"></i><span>{{ __('Warehouses') }}</span></a>
             <a class="nav-link {{ request()->routeIs('stock-movements.*') ? 'active' : '' }}" href="{{ route('stock-movements.index') }}"><i class="bi bi-arrow-left-right"></i><span>{{ __('Stock Movements') }}</span></a>
+<<<<<<< HEAD
             <a class="nav-link {{ request()->routeIs('sales.*') ? 'active' : '' }}" href="{{ route('sales.index') }}"><i class="bi bi-graph-up-arrow"></i><span>{{ __('Sales') }}</span></a>
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         </nav>
         <div class="nav-section mt-3">{{ __('Workspace') }}</div><nav class="nav flex-column">
             <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}"><i class="bi bi-file-earmark-bar-graph"></i><span>{{ __('Reports') }}</span></a>

@@ -55,6 +55,7 @@ class ChannelMessageSender
         $phoneNumberId = $this->requireConfig('services.whatsapp.phone_number_id', 'Set WHATSAPP_PHONE_NUMBER_ID before sending WhatsApp messages.');
         $version = config('services.whatsapp.api_version');
 
+<<<<<<< HEAD
         $payload = [
             'messaging_product' => 'whatsapp',
             'recipient_type' => 'individual',
@@ -88,6 +89,20 @@ class ChannelMessageSender
         $response = Http::withToken($token)
             ->acceptJson()
             ->post("https://graph.facebook.com/{$version}/{$phoneNumberId}/messages", $payload)
+=======
+        $response = Http::withToken($token)
+            ->acceptJson()
+            ->post("https://graph.facebook.com/{$version}/{$phoneNumberId}/messages", [
+                'messaging_product' => 'whatsapp',
+                'recipient_type' => 'individual',
+                'to' => ltrim($message->contact_address, '+'),
+                'type' => 'text',
+                'text' => [
+                    'preview_url' => false,
+                    'body' => $message->body,
+                ],
+            ])
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
             ->throw();
 
         $messageId = $response->json('messages.0.id');

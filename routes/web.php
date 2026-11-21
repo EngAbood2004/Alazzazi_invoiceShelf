@@ -18,6 +18,7 @@ use App\Http\Controllers\Management\UserManagementController;
 use App\Http\Controllers\Management\PaymentController;
 use App\Http\Controllers\Management\PaymentMethodController;
 use App\Http\Controllers\ReportController;
+<<<<<<< HEAD
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\CustomerMessageController;
 use App\Http\Controllers\UserLocationController;
@@ -29,6 +30,10 @@ use App\Http\Controllers\Invoicing\InsightsController;
 use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Invoicing\RecurringInvoiceController;
 use App\Http\Controllers\PublicArea\PublicInvoiceController;
+=======
+use App\Http\Controllers\CustomerMessageController;
+use App\Http\Controllers\UserLocationController;
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
 use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('/login',[LoginController::class,'showLoginForm'])->name('login');
@@ -43,6 +48,7 @@ Route::get('/language/{locale}', function (string $locale) {
     return back();
 })->name('language.switch');
 
+<<<<<<< HEAD
 // Customer-facing links (secret token, no login)
 Route::prefix('i')->name('public.')->middleware('throttle:60,1')->group(function () {
     Route::get('/{token}', [PublicInvoiceController::class, 'show'])->name('invoices.show');
@@ -52,12 +58,17 @@ Route::prefix('i')->name('public.')->middleware('throttle:60,1')->group(function
 });
 Route::get('/e/{token}/pdf', [PublicInvoiceController::class, 'estimate'])->name('public.estimates.pdf')->middleware('throttle:60,1');
 
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
 Route::post('/logout',[LoginController::class,'logout'])->name('logout')->middleware('auth');
 Route::middleware('auth')->group(function () {
     Route::get('/',DashboardController::class)->name('dashboard');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index')->middleware('role:admin,hr,warehouse_manager');
+<<<<<<< HEAD
     Route::get('/sales', [SaleController::class, 'index'])->name('sales.index')->middleware('role:warehouse_manager');
     Route::post('/sales', [SaleController::class, 'store'])->name('sales.store')->middleware('role:warehouse_manager');
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     Route::get('/messages', [CustomerMessageController::class, 'index'])->name('messages.index');
     Route::post('/messages', [CustomerMessageController::class, 'store'])->name('messages.store');
     Route::get('/locations', [UserLocationController::class, 'index'])->name('locations.index');
@@ -80,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('suppliers',SupplierController::class)->except(['show'])->middleware('role:warehouse_manager');
     Route::resource('warehouses',WarehouseController::class)->except(['show'])->middleware('role:warehouse_manager');
     Route::resource('products',ProductController::class)->middleware('role:warehouse_manager');
+<<<<<<< HEAD
     // Invoicing (accountants; admins pass every role check)
     Route::middleware('role:accountant')->group(function () {
         Route::get('insights', InsightsController::class)->name('insights');
@@ -105,6 +117,8 @@ Route::middleware('auth')->group(function () {
         Route::post('settings/taxes', [BusinessSettingController::class, 'storeTax'])->name('taxes.store');
         Route::post('settings/taxes/{tax}/toggle', [BusinessSettingController::class, 'toggleTax'])->name('taxes.toggle');
     });
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     Route::get('stock-movements',[StockMovementController::class,'index'])->name('stock-movements.index')->middleware('role:warehouse_manager');
     Route::get('stock-movements/create',[StockMovementController::class,'create'])->name('stock-movements.create')->middleware('role:warehouse_manager');
     Route::post('stock-movements',[StockMovementController::class,'store'])->name('stock-movements.store')->middleware('role:warehouse_manager');

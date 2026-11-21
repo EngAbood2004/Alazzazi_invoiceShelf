@@ -47,7 +47,11 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('categories.index')
+<<<<<<< HEAD
             ->with('success', __('Category added successfully.'));
+=======
+            ->with('success', 'Kategori berhasil ditambahkan.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -72,7 +76,11 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('categories.index')
+<<<<<<< HEAD
             ->with('success', __('Category updated successfully.'));
+=======
+            ->with('success', 'Kategori berhasil diperbarui.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -82,13 +90,21 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->products()->exists()) {
+<<<<<<< HEAD
             return back()->with('error', __('This category cannot be deleted because it is assigned to products.'));
+=======
+            return back()->with('error', 'Kategori tidak dapat dihapus karena masih digunakan oleh produk.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         }
 
         $category->delete();
 
         return redirect()
             ->route('categories.index')
+<<<<<<< HEAD
             ->with('success', __('Category deleted successfully.'));
+=======
+            ->with('success', 'Kategori berhasil dihapus.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 }

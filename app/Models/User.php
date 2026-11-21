@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
     ];
 
+<<<<<<< HEAD
     /**
      * Default attribute values. The users.role column is NOT NULL, so every
      * new account starts as a plain user until an administrator promotes it.
@@ -31,6 +32,8 @@ class User extends Authenticatable
         'role' => 'user',
     ];
 
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     protected $hidden = [
         'password',
         'remember_token',

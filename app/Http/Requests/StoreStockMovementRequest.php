@@ -27,10 +27,17 @@ class StoreStockMovementRequest extends FormRequest
     public function messages(): array
     {
         return [
+<<<<<<< HEAD
             'type.in'           => __('Movement type must be stock in, stock out, or adjustment.'),
             'quantity.min'      => __('Quantity must be at least one.'),
             'product_id.exists' => __('The selected product is unavailable.'),
             'warehouse_id.exists' => __('The selected warehouse is unavailable.'),
+=======
+            'type.in'           => 'Tipe pergerakan harus salah satu dari: masuk (in), keluar (out), atau penyesuaian (adjustment).',
+            'quantity.min'      => 'Jumlah harus minimal 1.',
+            'product_id.exists' => 'Produk tidak ditemukan.',
+            'warehouse_id.exists' => 'Gudang tidak ditemukan.',
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         ];
     }
 }

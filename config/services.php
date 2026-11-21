@@ -41,6 +41,7 @@ return [
         'app_secret' => env('WHATSAPP_APP_SECRET'),
         'verify_token' => env('WHATSAPP_VERIFY_TOKEN'),
         'api_version' => env('WHATSAPP_API_VERSION', 'v24.0'),
+<<<<<<< HEAD
         // Business-initiated messages (reminders) outside the 24h window need an approved template.
         'reminder_template' => env('WHATSAPP_REMINDER_TEMPLATE'),
         'reminder_template_language' => env('WHATSAPP_REMINDER_TEMPLATE_LANGUAGE', 'ar'),
@@ -63,6 +64,8 @@ return [
         'public_key' => env('LAHZA_PUBLIC_KEY'),
         'base_url' => env('LAHZA_BASE_URL', 'https://api.lahza.io'),
         'currency' => env('LAHZA_CURRENCY', 'ILS'),
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     ],
 
     'twilio' => [

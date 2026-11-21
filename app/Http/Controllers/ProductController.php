@@ -80,7 +80,11 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.show', $product)
+<<<<<<< HEAD
             ->with('success', __('Product added successfully.'));
+=======
+            ->with('success', 'Produk berhasil ditambahkan.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -123,7 +127,11 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.show', $product)
+<<<<<<< HEAD
             ->with('success', __('Product updated successfully.'));
+=======
+            ->with('success', 'Produk berhasil diperbarui.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -133,7 +141,11 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->stockMovements()->exists()) {
+<<<<<<< HEAD
             return back()->with('error', __('This product cannot be deleted because it has stock movement history.'));
+=======
+            return back()->with('error', 'Produk tidak dapat dihapus karena sudah memiliki riwayat pergerakan stok.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         }
 
         // Remove orphan product_stocks first
@@ -142,6 +154,10 @@ class ProductController extends Controller
 
         return redirect()
             ->route('products.index')
+<<<<<<< HEAD
             ->with('success', __('Product deleted successfully.'));
+=======
+            ->with('success', 'Produk berhasil dihapus.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 }

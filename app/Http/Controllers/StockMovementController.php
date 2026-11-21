@@ -84,7 +84,11 @@ class StockMovementController extends Controller
 
             return redirect()
                 ->route('stock-movements.index')
+<<<<<<< HEAD
                 ->with('success', __('Stock movement recorded successfully.'));
+=======
+                ->with('success', 'Pergerakan stok berhasil dicatat.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         } catch (ValidationException $e) {
             return back()
                 ->withErrors($e->errors())

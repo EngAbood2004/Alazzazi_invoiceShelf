@@ -49,7 +49,11 @@ class WarehouseController extends Controller
 
         return redirect()
             ->route('warehouses.index')
+<<<<<<< HEAD
             ->with('success', __('Warehouse added successfully.'));
+=======
+            ->with('success', 'Gudang berhasil ditambahkan.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -72,7 +76,11 @@ class WarehouseController extends Controller
 
         return redirect()
             ->route('warehouses.index')
+<<<<<<< HEAD
             ->with('success', __('Warehouse updated successfully.'));
+=======
+            ->with('success', 'Gudang berhasil diperbarui.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -82,17 +90,29 @@ class WarehouseController extends Controller
     public function destroy(Warehouse $warehouse)
     {
         if ($warehouse->stocks()->where('quantity', '>', 0)->exists()) {
+<<<<<<< HEAD
             return back()->with('error', __('This warehouse cannot be deleted while it contains stock.'));
         }
 
         if ($warehouse->stockMovements()->exists()) {
             return back()->with('error', __('This warehouse cannot be deleted because it has stock movement history.'));
+=======
+            return back()->with('error', 'Gudang tidak dapat dihapus karena masih memiliki stok.');
+        }
+
+        if ($warehouse->stockMovements()->exists()) {
+            return back()->with('error', 'Gudang tidak dapat dihapus karena masih memiliki riwayat pergerakan stok.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         }
 
         $warehouse->delete();
 
         return redirect()
             ->route('warehouses.index')
+<<<<<<< HEAD
             ->with('success', __('Warehouse deleted successfully.'));
+=======
+            ->with('success', 'Gudang berhasil dihapus.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 }

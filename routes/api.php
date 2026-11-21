@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/webhooks/whatsapp', [CommunicationWebhookController::class, 'verifyWhatsApp']);
 Route::post('/webhooks/whatsapp', [CommunicationWebhookController::class, 'receiveWhatsApp']);
+<<<<<<< HEAD
 Route::post('/webhooks/lahza', [\App\Http\Controllers\PublicArea\PublicInvoiceController::class, 'webhook'])->name('webhooks.lahza');
 Route::post('/webhooks/twilio/inbound', [CommunicationWebhookController::class, 'receiveTwilioSms']);
 Route::post('/webhooks/twilio/status', [CommunicationWebhookController::class, 'updateTwilioStatus']);
@@ -32,3 +33,7 @@ Route::prefix('v1')->name('api.')->group(function () {
         });
     });
 });
+=======
+Route::post('/webhooks/twilio/inbound', [CommunicationWebhookController::class, 'receiveTwilioSms']);
+Route::post('/webhooks/twilio/status', [CommunicationWebhookController::class, 'updateTwilioStatus']);
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264

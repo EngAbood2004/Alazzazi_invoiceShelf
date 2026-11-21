@@ -169,10 +169,14 @@
     "Type": "Type",
     "Products": "Products",
     "Warehouse": "Warehouse",
+<<<<<<< HEAD
     "Product": "Product",
     "aging.current": "Not yet due",
     "aging.1_30": "1–30 days",
     "aging.31_60": "31–60 days",
     "aging.61_90": "61–90 days",
     "aging.90_plus": "90+ days"
+=======
+    "Product": "Product"
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
 }

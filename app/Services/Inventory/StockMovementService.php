@@ -53,10 +53,14 @@ class StockMovementService
 
             if ($after < 0) {
                 throw ValidationException::withMessages([
+<<<<<<< HEAD
                     'quantity' => [__('Insufficient stock. Available: :available, requested: :requested.', [
                         'available' => $before,
                         'requested' => $data['quantity'],
                     ])],
+=======
+                    'quantity' => ['Stok tidak mencukupi. Stok tersedia: '.$before.', stok keluar: '.$data['quantity'].'.'],
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
                 ]);
             }
 

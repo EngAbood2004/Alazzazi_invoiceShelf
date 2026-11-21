@@ -16,12 +16,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+<<<<<<< HEAD
         $middleware->alias(['role' => EnsureUserRole::class, 'auth.token' => \App\Http\Middleware\AuthenticateApiToken::class]);
+=======
+        $middleware->alias(['role' => EnsureUserRole::class]);
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         $middleware->web(append: [SetLocale::class]);
         // Redirect unauthenticated users to the login page
         $middleware->redirectGuestsTo(fn (Request $request) => route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+<<<<<<< HEAD
         // JSON errors for the mobile API
         $exceptions->shouldRenderJsonWhen(fn (Request $request) => $request->is('api/*') || $request->expectsJson());
+=======
+        //
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     })->create();

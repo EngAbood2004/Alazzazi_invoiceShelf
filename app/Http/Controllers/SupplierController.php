@@ -51,7 +51,11 @@ class SupplierController extends Controller
 
         return redirect()
             ->route('suppliers.index')
+<<<<<<< HEAD
             ->with('success', __('Supplier added successfully.'));
+=======
+            ->with('success', 'Supplier berhasil ditambahkan.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -74,7 +78,11 @@ class SupplierController extends Controller
 
         return redirect()
             ->route('suppliers.index')
+<<<<<<< HEAD
             ->with('success', __('Supplier updated successfully.'));
+=======
+            ->with('success', 'Supplier berhasil diperbarui.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 
     /**
@@ -84,13 +92,21 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         if ($supplier->products()->exists()) {
+<<<<<<< HEAD
             return back()->with('error', __('This supplier cannot be deleted because it is assigned to products.'));
+=======
+            return back()->with('error', 'Supplier tidak dapat dihapus karena masih digunakan oleh produk.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         }
 
         $supplier->delete();
 
         return redirect()
             ->route('suppliers.index')
+<<<<<<< HEAD
             ->with('success', __('Supplier deleted successfully.'));
+=======
+            ->with('success', 'Supplier berhasil dihapus.');
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
     }
 }

@@ -134,6 +134,7 @@ php artisan serve
 
 > **مهم:** لا تشغّل `php artisan migrate:fresh` على قاعدة بيانات فيها بيانات تريد الاحتفاظ بها، لأنه يحذف جميع الجداول ويعيد إنشائها. استخدم `php artisan migrate` لتطبيق migrations الجديدة.
 
+<<<<<<< HEAD
 ## الفوترة والتحليلات الذكية (الإضافة الجديدة)
 
 بعد سحب التعديلات شغّل `php artisan migrate` (بدون fresh). القائمة الجانبية فيها قسم **الفوترة** للمدير والمحاسب:
@@ -186,6 +187,8 @@ docker compose exec app php artisan key:generate --force   # مرة واحدة �
 ```
 يشغّل التطبيق (Nginx + PHP-FPM + المجدول) وMySQL 8.4 وGotenberg 8. التطبيق على المنفذ 10000؛ ضع أمامه وكيل HTTPS (Caddy أو Nginx) لأن بوابة الدفع وتطبيق الجوال يحتاجان HTTPS.
 
+=======
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
 ## فحص المشروع
 ```bash
 php artisan route:list

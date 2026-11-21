@@ -24,6 +24,7 @@ class SetLocale
         $response = $next($request);
 
         if ($response->headers->get('Content-Type') && str_contains($response->headers->get('Content-Type'), 'text/html')) {
+<<<<<<< HEAD
             // Illuminate\Http\Response::setContent() replaces the "original"
             // value with the rendered string. Preserve the original View so
             // response assertions (assertViewIs) and view composers keep
@@ -39,6 +40,9 @@ class SetLocale
             if ($response instanceof \Illuminate\Http\Response) {
                 $response->original = $original;
             }
+=======
+            $response->setContent(LocalizedText::translateRendered($response->getContent()));
+>>>>>>> cfae57bbdb3e98a69b3be2aeae9d4acf3c54b264
         }
 
         return $response;
